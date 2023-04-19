@@ -2,7 +2,7 @@
 %heterogeneity parameter (0<=beta<=1):
 %beta=0 for homogenous lung
 %beta=1 for no ventilation/perfusion correlation
-beta=0.5
+%beta=0.5
 %
 %number of iterations used in bisection:
 maxcount=20
@@ -56,19 +56,30 @@ VAbar=VAtotal/n
 %
 %expected perfusion per alveolus: 
 Qbar=Qtotal/n 
-
+%
+%random initialization 
+%of ventilation and perfusion:
+%create two independent vectors 
+%of exponential random variables 
+%with mean 1:
 a1=-log(rand(n,1));
 a2=-log(rand(n,1));
 av=(a1+a2)/2;        
+%components of av have mean 1
+%and distribution like t*exp(-t).
 VA=VAbar*(a1*beta+av*(1-beta));
 Q = Qbar*(a2*beta+av*(1-beta));
+%when beta=0, VA and Q are in a fixed proportion 
+%when beta=1, VA and Q are independent
 r=VA./Q;
 figure(1)
 plot(Q,VA,'.')
-
+xlabel('Q, Perfusion')
+ylabel('VA, Ventilation')
+title(sprintf('Ventilation vs Perfusion for Beta = %d', beta))
 %find actual values of 
 %VAtotal, Qtotal, VAbar, and Qbar:
 VAtotal=sum(VA)
 Qtotal =sum(Q)
 VAbar=VAtotal/n
- Qbar= Qtotal/n
+Qbar= Qtotal/n
