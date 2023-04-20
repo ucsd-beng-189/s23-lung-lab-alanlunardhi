@@ -2,7 +2,7 @@
 clear all
 clf
 global Pstar cstar n maxcount M Q camax RT cI;
-%must comment cI out of setup_lung.m and uncomment beta value for this script to work
+%must comment out cI in setup_lung and uncomment beta for this to work
 cImat = []
 PAbarmat = []
 Pabarmat = []
@@ -10,7 +10,7 @@ Pvmat = []
 cAbarmat = []
 cabarmat = []
 cvmat = []
-for cI = (0.1:0.01:0.2)/(22.4*(310/273)) 
+for cI = (0.08:0.01:0.2)/(22.4*(310/273)) 
     setup_lung
     cvsolve
     outchecklung
@@ -23,22 +23,24 @@ for cI = (0.1:0.01:0.2)/(22.4*(310/273))
     cvmat = [cvmat cv]
 end
 
-figure(100)
-plot(cImat,PAbarmat,'g.', 'Markersize',24)
+altitudes = linspace(0,25000,length(cImat));
+
+figure(300)
+plot(altitudes,PAbarmat(end:-1:1),'g.', 'Markersize',24)
 hold on
-plot(cImat,Pabarmat,'b.', 'Markersize',24)
-plot(cImat,Pvmat,'k.', 'Markersize',24)
-xlabel('cI')
+plot(altitudes,Pabarmat(end:-1:1),'b.', 'Markersize',24)
+plot(altitudes,Pvmat(end:-1:1),'k.', 'Markersize',24)
+xlabel('Altitudes (feet)')
 ylabel('Partial Pressure')
-title('Various Partial Pressures vs cI')
+title('Various Partial Pressures vs Altitude')
 legend('PAbar - mean alveolar partial pressure of oxygen', 'Pabar - mean arterial partial pressure of oxygen', 'Pv - venous partial pressure of oxygen')
 
-figure(200)
-plot(cImat,cAbarmat,'g.', 'Markersize',24)
+figure(400)
+plot(altitudes,cAbarmat(end:-1:1),'g.', 'Markersize',24)
 hold on
-plot(cImat,cabarmat,'b.', 'Markersize',24)
-plot(cImat,cv,'k.', 'Markersize',24)
-xlabel('cI')
+plot(altitudes,cabarmat(end:-1:1),'b.', 'Markersize',24)
+plot(altitudes,cv(end:-1:1),'k.', 'Markersize',24)
+xlabel('Altitude (feet)')
 ylabel('Oxygen Concentration')
-title('Various oxygen concentrations vs cI')
+title('Various oxygen concentrations vs Altitude')
 legend('cAbar - mean alveolar concentration of oxygen', 'cabar - mean arterial concentration of oxygen', 'cv - venous concentration of oxygen')
