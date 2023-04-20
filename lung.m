@@ -39,7 +39,7 @@ figure(400)
 plot(altitudes,cAbarmat(end:-1:1),'g.', 'Markersize',24)
 hold on
 plot(altitudes,cabarmat(end:-1:1),'b.', 'Markersize',24)
-plot(altitudes,cv(end:-1:1),'k.', 'Markersize',24)
+plot(altitudes,cvmat(end:-1:1),'k.', 'Markersize',24)
 xlabel('Altitude (feet)')
 ylabel('Oxygen Concentration')
 title('Various oxygen concentrations vs Altitude')
